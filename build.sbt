@@ -10,6 +10,6 @@ lazy val root = project
       "com.typesafe" % "config" % "1.4.1",
       "com.softwaremill.sttp.client3" %% "core" % "3.3.13",
       "dev.zio" %% "zio-json" % "0.2.0-M1",
-      "org.scalatest" %% "scalatest" % "3.2.9" % "test"
-    )
+      "org.scalatest" %% "scalatest" % "3.2.9" % "test",
+    ),
   )
