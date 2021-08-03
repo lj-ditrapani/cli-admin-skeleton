@@ -14,3 +14,5 @@ lazy val root = project
       "org.scalatest" %% "scalatest" % "3.2.9" % "test",
     ),
   )
+
+scalacOptions ++= Seq("-Yexplicit-nulls")

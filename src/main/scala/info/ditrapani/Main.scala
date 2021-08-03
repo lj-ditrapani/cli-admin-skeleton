@@ -1,15 +1,20 @@
 package info.ditrapani
 
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{Config, ConfigFactory}
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import sttp.client3.{basicRequest, UriContext}
 import sttp.client3.httpclient.HttpClientFutureBackend
 
 object Main extends App {
-  val config = ConfigFactory.load()
   println("Hello")
-  println(config.getString("foo"))
+
+  val config: Config | Null = ConfigFactory.load()
+  if (config != null) {
+    println(config.getString("foo"))
+  } else {
+    println("no config...")
+  }
 
   val sort: Option[String] = None
   val query = "http language:scala"
