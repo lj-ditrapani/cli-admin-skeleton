@@ -1,12 +1,10 @@
 package info.ditrapani
 
-import zio.json.{DeriveJsonDecoder, JsonDecoder, DecoderOps}
 import com.typesafe.config.ConfigFactory
-import sttp.client3._
-import sttp.client3.httpclient.HttpClientFutureBackend
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent._
-import scala.concurrent.duration._
+import sttp.client3.{basicRequest, UriContext}
+import sttp.client3.httpclient.HttpClientFutureBackend
 
 object Main extends App {
   val config = ConfigFactory.load()
@@ -27,13 +25,21 @@ object Main extends App {
       println(response.headers)
     }
   }
-  Await.ready(future, 100.seconds)
 
-  println("""{"bar": "hi", "baz": 22}""".fromJson[Foo])
+  {
+    import scala.concurrent.duration._
+    Await.ready(future, 100.seconds)
+  }
+
+  {
+    import zio.json.DecoderOps
+    println("""{"bar": "hi", "baz": 22}""".fromJson[Foo])
+  }
 }
 
 final case class Foo(bar: String, baz: Int)
 
 object Foo {
+  import zio.json.{DeriveJsonDecoder, JsonDecoder}
   implicit val decoder: JsonDecoder[Foo] = DeriveJsonDecoder.gen[Foo]
 }
